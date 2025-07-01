@@ -41,17 +41,17 @@ estudiantes %>%
     stat_3 ~ "**No, salir**\nN = {n}"
   ))%>%
   as_flex_table() %>%
-  save_as_docx(path = "USO_IA.docx")
+  save_as_docx(path = "est.docx")
 
 
 # select variables of interest --------------------------------------------
-select_vars <- estudiantes %>% select(-`Marca temporal`, -Municipio, -`¿Usas herramientas de inteligencia artificial (como ChatGPT, Gemini, DeepSeek, etc.)?` )
+select_est <- estudiantes %>% select(-`Marca temporal`, -Municipio, -`¿Usas herramientas de inteligencia artificial (como ChatGPT, Gemini, DeepSeek, etc.)?` )
 
 #Explore vars selected
-df_status(select_vars)
+df_status(select_est)
 
-freq(select_vars)
+freq(select_est)
 
 #Source and file edit Analytics.R ------------------------------------------
-source("Analytics.R");file.edit("Analytics.R")
+source("analicE.R");file.edit("analicE.R")
 

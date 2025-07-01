@@ -2,12 +2,12 @@
 library(tidyverse)
 
 # Import data set ---------------------------------------------------------
-estudiantes <- read_csv("estudiantes.csv")
+docentes <- read_csv("docentes.csv")
 
 #Cargar libreria
 library(funModeling)
 # Explore vars ------------------------------------------------------------
-glimpse(estudiantes)
+glimpse(docentes)
 
 
 # Table cross -----------------------------------------------------------
@@ -23,7 +23,7 @@ theme_gtsummary_compact()  # Estilo compacto para tablas
 
 theme_gtsummary_journal("nejm")           # Estilo de revista QJEconomics
 
-estudiantes %>%
+docentes %>%
   # 1. Filter NA in the AI variable (assuming column 2)
   filter(!is.na(.[[2]])) %>%
   # 3. Create table_cross (IA vs. Sexo)
@@ -41,17 +41,23 @@ estudiantes %>%
     stat_3 ~ "**No, salir**\nN = {n}"
   ))%>%
   as_flex_table() %>%
-  save_as_docx(path = "USO_IA.docx")
+  save_as_docx(path = "doce.docx")
 
 
 # select variables of interest --------------------------------------------
-select_vars <- estudiantes %>% select(-`Marca temporal`, -Municipio, -`¿Usas herramientas de inteligencia artificial (como ChatGPT, Gemini, DeepSeek, etc.)?` )
 
+select_doce <- docentes %>%
+  select(
+    -`Marca temporal`,
+    -Municipio,
+    -`¿Usas herramientas de inteligencia artificial (como ChatGPT, Gemini, DeepSeek, etc.)?`,  # ¡Cierre de paréntesis y signo de interrogación!
+    -`Años de servicio`
+  )
 #Explore vars selected
-df_status(select_vars)
+df_status(select_doce)
 
-freq(select_vars)
+freq(select_doce)
 
 #Source and file edit Analytics.R ------------------------------------------
-source("Analytics.R");file.edit("Analytics.R")
+source("analiceD.R");file.edit("analiceD.R")
 
