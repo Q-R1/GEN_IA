@@ -48,7 +48,7 @@ ggplot(valores, aes(x = Grupo, y = MediaGeneral, group = 1)) +
   theme_minimal()
 
 
-
+# Plot expand_limits y = 0 ------------------------------------------------
 
 ggplot(valores, aes(x = Grupo, y = MediaGeneral, group = 1)) +
   geom_line(color = "steelblue", linewidth = 1) +              # Línea

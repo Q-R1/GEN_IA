@@ -24,7 +24,7 @@ theme_gtsummary_compact()  # Estilo compacto para tablas
 theme_gtsummary_journal("nejm")           # Estilo de revista QJEconomics
 
 estudiantes %>%
-  # 1. Filter NA in the AI variable (assuming column 2)
+  #1. Filter NA in the AI variable (assuming column 2)
   filter(!is.na(.[[2]])) %>%
   # 3. Create table_cross (IA vs. Sexo)
   tbl_cross(
