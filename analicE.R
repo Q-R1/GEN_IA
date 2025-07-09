@@ -3,22 +3,22 @@
 
 #Remove variables with missing values
 omitir_na_est <- select_est %>%
-  filter(!is.na(Sexo))
+  filter(across(c(1, 2), ~ !is.na(.)))
 
 mean_pienso <- omitir_na_est %>%
   summarise(
-    across(c(2:5), ~ mean(.x, na.rm = TRUE)),
+    across(c(3:6), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(3:6)), na.rm = TRUE))
 
 
 mean_siento <- omitir_na_est %>%
   summarise(
-    across(c(6:12), ~ mean(.x, na.rm = TRUE)),
+    across(c(7:13), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(6:12)), na.rm = TRUE))
 
 mean_hago <- omitir_na_est %>%
   summarise(
-    across(c(13:23), ~ mean(.x, na.rm = TRUE)),
+    across(c(14:24), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(13:23)), na.rm = TRUE))
 
 # Reordena y crea el data frame
@@ -51,5 +51,36 @@ valores %>%
     x = "Dimensión",
     y = "Media general"
   ) +
-  theme_minimal() +
-  ylim(0, max(valores$MediaGeneral) * 1.1)
+  theme_minimal() #+
+ # ylim(0, max(valores$MediaGeneral) * 1.1)
+
+# KRUSKAL WALLIS ----------------------------------------------------------
+
+library(tidyverse)
+
+# Convertir a formato largo (para ANOVA/Kruskal-Wallis)
+data_long <- omitir_na_est %>%
+  pivot_longer(
+    cols = c(3:6, 7:13, 14:24),
+    names_to = "variable",
+    values_to = "valor"
+  ) %>%
+  mutate(
+    grupo = case_when(
+      variable %in% names(omitir_na_est)[3:6] ~ "Pienso",
+      variable %in% names(omitir_na_est)[7:13] ~ "Siento",
+      variable %in% names(omitir_na_est)[14:24] ~ "Hago",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(grupo))  # Eliminar filas sin grupo asignado
+
+# Medias y desviaciones estándar por grupo
+desc_stats <- data_long %>%
+  group_by(grupo) %>%
+  summarise(
+    media = mean(valor, na.rm = TRUE),
+    sd = sd(valor, na.rm = TRUE),
+    n = n()
+  )
+

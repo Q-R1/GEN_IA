@@ -1,27 +1,23 @@
 
 # Means -------------------------------------------------------------------
 
-#Remove variables with missing values
-omitir_na_doce <- select_doce %>%
-  filter(!is.na(Sexo))
-
-TK_doce <- omitir_na_doce %>%
+TK_docentes <- vars_interest_docente_filtrado %>%
   summarise(
     across(c(2:8), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(2:8)), na.rm = TRUE))
 
 
-TCK_doce <- omitir_na_doce %>%
+TCK_docente <- vars_interest_docente_filtrado %>%
   summarise(
     across(c(9:10), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(9:10)), na.rm = TRUE))
 
-TPK_doce <- omitir_na_doce %>%
+TPK_docente <- vars_interest_docente_filtrado %>%
   summarise(
     across(c(11:15), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(11:15)), na.rm = TRUE))
 
-TPACK_doce <- omitir_na_doce %>%
+TPACK_docente <- vars_interest_docente_filtrado %>%
   summarise(
     across(c(16:20), ~ mean(.x, na.rm = TRUE)),
     mean_general = mean(c_across(c(16:20)), na.rm = TRUE))
