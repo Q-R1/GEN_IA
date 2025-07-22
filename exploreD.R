@@ -24,17 +24,27 @@ docentes$`¿Usas herramientas de inteligencia artificial (como ChatGPT, Gemini, 
   fct_relevel(
     "Sí, ir al cuestionario", "A veces, ir al cuestionario", "No, salir"
   )
- docentes %>%
+
+docentes %>%
   tbl_cross (row = 2, col = 3, percent = "cell") %>%
   bold_labels() %>%
   modify_header(
     all_stat_cols = "**{level}**\nN = {n}",
     stat_1 = "**Femenino**\nN = {n}",
     stat_2 = "**Masculino**\nN = {n}",
-    stat_3 = "**No, salir**\nN = {n}"
-  )#%>%
+    stat_3 = "**No, salir**\nN = {n}")#%>%
  #as_flex_table() %>%
  #save_as_docx(path = "doce.docx")
+
+
+ docentes %>%
+   tbl_cross(
+     row = 2,          # Variable para filas (nombre o posición)
+     col = 4,          # Variable para columnas (nombre o posición)
+     percent = "cell", # Porcentajes basados en el total general
+     margin = "column" # Totales por columna
+   ) %>%
+   add_overall()       # Añade totales por fila
 
 # variables of interest --------------------------------------------
 
